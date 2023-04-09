@@ -26,7 +26,7 @@ class Bot:
             command, *args = text.split()
 
             if parameters := self.command_parameters.get( command.lower(), None ):  # Проверка если комманда не проверяет заглавные буквы
-                if parameters['ignoreCase']:
+                if parameters['ignore_case']:
                     command = command.lower()
 
             handler = self.command_handlers.get(
@@ -41,15 +41,15 @@ class Bot:
             return Answer(answer)
         return None
 
-    def register_handler(self, command: str, handler: Handler, ignoreCase: bool = True) -> None:
-        if ignoreCase: command = command.lower()
+    def register_handler(self, command: str, handler: Handler, ignore_case: bool = True) -> None:
+        if ignore_case: command = command.lower()
         self.command_handlers[command] = handler
         self.command_parameters[command] = {
-            'ignoreCase': ignoreCase
+            'ignore_case': ignore_case
         }
 
-    def command(self, command: str, ignoreCase: bool = True):
+    def command(self, command: str, ignore_case: bool = True):
         def decorator(f: Handler):
-            self.register_handler(command, f, ignoreCase = ignoreCase)
+            self.register_handler(command, f, ignore_case = ignore_case)
             return f
         return decorator
