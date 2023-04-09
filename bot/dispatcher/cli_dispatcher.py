@@ -16,8 +16,9 @@ class CliDispatcher:
             print('bye :)')
 
     def __loop(self) -> None:
+        print(f'\nHi, i am bot {self.bot.name}, write /help to get all my commands')
         while True:
-            line = input('> ')
+            line = input('User > | ')
             msg = Message(
                 id=self.message_id,
                 text=line,
@@ -25,4 +26,4 @@ class CliDispatcher:
             )
             answer = self.bot.message(msg)
             if answer is not None:
-                print('<', answer.text)
+                print(f'{self.bot.name} |', answer.text)

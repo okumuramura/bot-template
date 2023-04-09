@@ -1,6 +1,6 @@
 from typing import Optional, Callable, List, Dict
 
-from bot.models.message import Message, Answer
+from bot.models.message import Answer, Message
 
 
 Handler = Callable[[Message, List[str]], str]
@@ -19,11 +19,19 @@ class Bot:
     ) -> str:
         return 'unknown command!'
 
+    def all_commands(self) -> str:
+        cmds = ""
+        for command in self.command_handlers.keys():
+            cmds += f"/{command}"
+        cmds += "\r"
+        return cmds
+
     def message(self, msg: Message) -> Optional[Answer]:
         if msg.text.startswith(self.prefix):
             text = msg.text[len(self.prefix):]
             command, *args = text.split()
-
+            if command == "help":
+                return Answer(self.all_commands())
             handler = self.command_handlers.get(
                 command,
                 self.__default_unknown_command_handler
