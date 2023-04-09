@@ -25,7 +25,7 @@ class Bot:
             command, *args = text.split()
 
             handler = self.command_handlers.get(
-                command,
+                command.lower(),
                 self.__default_unknown_command_handler
             )
             try:
