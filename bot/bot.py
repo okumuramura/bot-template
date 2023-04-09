@@ -11,6 +11,7 @@ class Bot:
         self.name = name
         self.prefix = prefix
         self.command_handlers: Dict[str, Handler] = {}
+        self.command_parameters: Dict[str, Dict()] = {}
 
     def __default_unknown_command_handler(
             self,
@@ -24,6 +25,10 @@ class Bot:
             text = msg.text[len(self.prefix):]
             command, *args = text.split()
 
+            if parameters := self.command_parameters.get( command.lower(), None ):  # Проверка если комманда не проверяет заглавные буквы
+                if parameters['ignore_case']:
+                    command = command.lower()
+
             handler = self.command_handlers.get(
                 command,
                 self.__default_unknown_command_handler
@@ -36,11 +41,15 @@ class Bot:
             return Answer(answer)
         return None
 
-    def register_handler(self, command: str, handler: Handler) -> None:
+    def register_handler(self, command: str, handler: Handler, ignore_case: bool = True) -> None:
+        if ignore_case: command = command.lower()
         self.command_handlers[command] = handler
+        self.command_parameters[command] = {
+            'ignore_case': ignore_case
+        }
 
-    def command(self, command: str):
+    def command(self, command: str, ignore_case: bool = True):
         def decorator(f: Handler):
-            self.register_handler(command, f)
+            self.register_handler(command, f, ignore_case = ignore_case)
             return f
         return decorator
