@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+#IDE
+.idea/
+# here would be able to be folder for VS code, but i forgot VS code system folder name
+
 # C extensions
 *.so
 
