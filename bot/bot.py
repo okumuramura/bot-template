@@ -38,3 +38,9 @@ class Bot:
 
     def register_handler(self, command: str, handler: Handler) -> None:
         self.command_handlers[command] = handler
+
+    def command(self, command: str):
+        def decorator(f: Handler):
+            self.register_handler(command, f)
+            return f
+        return decorator
