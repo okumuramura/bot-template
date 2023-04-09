@@ -13,7 +13,7 @@ dispatcher = CliDispatcher(bot)
 def hello_handler(msg: Message, args: List[str]) -> str:
     return f'Hello, {msg.author}!'
 
-@bot.command('Case', ignoreCase=True)
+@bot.command('Case', ignoreCase=False)
 def case_handler(msg: Message, args: List[str]) -> str:
     return 'This command is casesensetive!'
 

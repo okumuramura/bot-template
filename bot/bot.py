@@ -42,7 +42,7 @@ class Bot:
         return None
 
     def register_handler(self, command: str, handler: Handler, ignoreCase: bool = True) -> None:
-        if not ignoreCase: command = command.lower()
+        if ignoreCase: command = command.lower()
         self.command_handlers[command] = handler
         self.command_parameters[command] = {
             'ignoreCase': ignoreCase
