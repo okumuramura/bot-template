@@ -6,7 +6,7 @@
 python main.py
 ```
 
-### Как использовать
+### Не использовать
 ```python
 from bot.bot import Bot
 from bot.dispatcher import CliDispatcher
